@@ -1,0 +1,43 @@
+SQL
+
+1. QUESTION:
+Є таблиця people
+колонки id, first_name, last_name, gender, day, month, year вивести всю інформацію про людей в яких first_name починається на J.
+
+SELECT *
+FROM people
+WHERE first_name LIKE 'J%';
+========================================================================================
+2. QUESTION
+Вивести стать та кількість людей цієї статті, які народились влітку після 2000 року
+
+If months are numbers:
+SELECT gender, COUNT(*) AS total
+FROM people
+WHERE year > 2000
+  AND month IN (6, 7, 8)
+GROUP BY gender
+
+If months are strings:
+SELECT gender, COUNT(*) AS total
+FROM people
+WHERE year > 2000
+  AND month IN ('06', '07', '08')
+GROUP BY gender
+
+If months are "months":
+SELECT gender, COUNT(*) AS total
+FROM people
+WHERE year > 2000
+  AND month IN ('June', 'July', 'August')
+GROUP BY gender
+========================================================================================
+Є таблиця cards 
+колонки id, people_id, number пов'язана з таблицею people по id людини.
+Вивести імена людей в алфавітному порядку (спочатку по прізвищу, потім по імені) та їхній номер картки (у однієї людини може бути декілька карток)
+
+SELECT p.first_name, p.last_name, c.card_number
+FROM people p
+JOIN cards c ON p.id = c.people_id
+ORDER BY p.last_name, p.first_name
+
